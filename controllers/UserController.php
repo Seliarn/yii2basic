@@ -64,9 +64,17 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
+        $userData = Yii::$app->request->post('User');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($userData) {
+            $userData['password_hash'] = Yii::$app->security->generatePasswordHash($userData['password_hash']);
+            $userData['auth_key'] = Yii::$app->security->generateRandomString();
+            $userData['created_at'] = $userData['updated_at'] = time();
+            if ($model->load(['User' => $userData]) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                var_dump($model->errors);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -83,10 +91,18 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $userData = Yii::$app->request->post('User');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($userData) {
+            $userData['password_hash'] = Yii::$app->security->generatePasswordHash($userData['password_hash']);
+            $userData['updated_at'] = time();
+            if ($model->load(['User' => $userData]) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                echo $model->errors;
+            }
         } else {
+            $model->password_hash = '';
             return $this->render('update', [
                 'model' => $model,
             ]);
