@@ -34,6 +34,7 @@
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'User Manager', 'icon' => 'id-card', 'url' => ['user/index'], 'visible' => !Yii::$app->user->isGuest],
                     [
                         'label' => 'Same tools',
                         'icon' => 'share',
