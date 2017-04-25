@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -281,6 +282,17 @@ use yii\helpers\Html;
                     </li>
                 </ul>
             </div>
+            <?php } else { ?>
+                <div class="navbar-custom-menu">
+
+                    <ul class="nav navbar-nav">
+
+                        <!-- Messages: style can be found in dropdown.less-->
+                        <li>
+                            <?= Html::a('Sign in', Url::to(['site/login']), ['class' => 'btn btn-link btn-flat', 'name' => 'signup-button']) ?>
+                        </li>
+                    </ul>
+                </div>
             <?php } ?>
     </nav>
 </header>
